@@ -1,6 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Online_Supermarket_Project.Models;
-using System.Diagnostics;
 
 namespace Online_Supermarket_Project.Controllers
 {
@@ -21,12 +19,6 @@ namespace Online_Supermarket_Project.Controllers
         public IActionResult Privacy()
         {
             return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }
