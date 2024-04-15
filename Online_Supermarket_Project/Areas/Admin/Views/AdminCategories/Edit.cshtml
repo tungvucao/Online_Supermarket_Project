@@ -1,54 +1,60 @@
 ﻿@model Online_Supermarket_Project.Models.Category
-
 @{
     ViewData["Title"] = "Edit";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Edit</h2>
+<section class="content-header">
+    <h1>
+        Cập nhật Danh Mục
+    </h1>
+    <ol class="breadcrumb">
+        <li><a asp-area="Admin" asp-controller="Home" asp-action="Index"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a asp-area="Admin" asp-controller="AdminCategories" asp-action="Index">QL Danh Mục</a></li>
+        <li class="active">Cập nhật Danh Mục</li>
+    </ol>
+</section>
 
-<h4>Category</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="CateId" />
-            <div class="form-group">
-                <label asp-for="CateName" class="control-label"></label>
-                <input asp-for="CateName" class="form-control" />
-                <span asp-validation-for="CateName" class="text-danger"></span>
+<section class="content">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-body">
+                <a class="btn btn-success" asp-area="Admin" asp-controller="AdminCategories" asp-route-id="@Model.CateId" asp-action="Index">Back to List</a>
             </div>
-            <div class="form-group">
-                <label asp-for="Desciption" class="control-label"></label>
-                <input asp-for="Desciption" class="form-control" />
-                <span asp-validation-for="Desciption" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="Status" /> @Html.DisplayNameFor(model => model.Status)
-                    </label>
+            <form role="form" asp-controller="AdminCategories" asp-action="Edit" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="CateId" />
+                <div class="box-body">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label>Category Name</label>
+                            <input type="text" class="form-control" asp-for="CateName" placeholder="Category Name">
+                            <span asp-validation-for="CateName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6" style="margin-top:27px">
+                            <label>Public<input style="font-size:20px;margin-left:15px" type="checkbox" asp-for="Status"></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea name="editor" id="editor">@Model.Desciption</textarea>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Alias" class="control-label"></label>
-                <input asp-for="Alias" class="form-control" />
-                <span asp-validation-for="Alias" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </form>
+
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary" fdprocessedid="6rbro">Submit</button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
+</section>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
+@section Scripts {
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#editor'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+}
