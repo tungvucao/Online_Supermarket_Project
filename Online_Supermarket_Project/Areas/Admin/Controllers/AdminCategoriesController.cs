@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AspNetCoreHero.ToastNotification.Abstractions;
+using AspNetCoreHero.ToastNotification.Notyf;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Online_Supermarket_Project.AppContext;
+using Online_Supermarket_Project.Helpper;
 using Online_Supermarket_Project.Models;
 using PagedList.Core;
 
@@ -67,12 +69,16 @@ namespace Online_Supermarket_Project.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CateId,CateName,Desciption,Status,Title,Alias")] Category category)
+        public async Task<IActionResult> Create(IFormCollection formValues, [Bind("CateId,CateName,Desciption,Status,Title,Alias")] Category category)
         {
             if (ModelState.IsValid)
             {
+                category.CateName = Utilities.ToTitleCase(category.CateName);
+                category.Alias = Utilities.ToUrlFriendly(category.CateName);
+                category.Desciption = formValues["editor"];
                 _context.Add(category);
                 await _context.SaveChangesAsync();
+                _notyfService.Success("Create Successfully!");
                 return RedirectToAction(nameof(Index));
             }
             return View(category);
@@ -99,7 +105,7 @@ namespace Online_Supermarket_Project.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CateId,CateName,Desciption,Status,Title,Alias")] Category category)
+        public async Task<IActionResult> Edit(IFormCollection formValues, int id, [Bind("CateId,CateName,Desciption,Status,Title,Alias")] Category category)
         {
             if (id != category.CateId)
             {
@@ -110,7 +116,9 @@ namespace Online_Supermarket_Project.Areas.Admin.Controllers
             {
                 try
                 {
+                    category.Desciption = formValues["editor"];
                     _context.Update(category);
+                    _notyfService.Success("Update Successfully!");
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -153,11 +161,13 @@ namespace Online_Supermarket_Project.Areas.Admin.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var category = await _context.Category.FindAsync(id);
-            if (category != null)
+            var pro = _context.Product.AsNoTracking().FirstOrDefault(x => x.CateId == id);
+            if (category != null && pro == null)
             {
+                _notyfService.Success("Delete Successfully");
                 _context.Category.Remove(category);
             }
-
+            _notyfService.Warning("Delete Failed! This category already exist products");
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
