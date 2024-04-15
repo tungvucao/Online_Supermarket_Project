@@ -1,0 +1,120 @@
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<Online_Supermarket_Project.Models.Category>
+
+@{
+    int CurrentPage = ViewBag.CurrentPage;
+    ViewData["Title"] = "Danh Sách Danh Mục  ";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<section class="content-header">
+    <h1>
+        Danh Sách Danh Mục: page @CurrentPage
+    </h1>
+    <ol class="breadcrumb">
+        <li><a asp-area="Admin" asp-controller="Home" asp-action="Index"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a asp-area="Admin" asp-controller="AdminCategories" asp-action="Index">QL Danh Mục</a></li>
+        <li class="active">Danh Sách Danh Mục</li>
+    </ol>
+</section>
+
+<section class="content">
+
+    <!-- Default box -->
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <div style="display:flex">
+                    <a asp-area="Admin" asp-controller="AdminCategories" asp-action="Create" style="margin-right:20px" class="btn btn-success">+ Add Category</a>
+                </div>
+
+                <div class="box-tools">
+                    <div class="input-group input-group-sm" style="width: 250px;">
+                        <input type="text" name="keyword" id="keyword" style=" min-height:34px" class="form-control pull-right" placeholder="Search">
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="records_table">
+                        @if (Model != null)
+                        {
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.CateId</td>
+                                    <td>@item.CateName</td>
+                                    <td>
+                                        @if (@item.Status)
+                                        {
+                                            <span class="label label-success">Active</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="label label-danger">Inactive</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <a asp-area="Admin" asp-controller="AdminCategories" asp-action="Details" asp-route-id="@item.CateId" class="btn btn-success">Chi Tiết</a> |
+                                        <a asp-area="Admin" asp-controller="AdminCategories" asp-action="Edit" asp-route-id="@item.CateId" class="btn btn-primary">Sửa</a> |
+                                        <a asp-area="Admin" asp-controller="AdminCategories" asp-action="Delete" asp-route-id="@item.CateId" class="btn btn-danger">Xóa</a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td><h3>Không có bản ghi nào</h3></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="box-footer clearfix">
+                <ul class="pagination pagination-sm no-margin pull-right">
+                    <pager list="@Model" asp-area="Admin" asp-controller="AdminCategories" asp-action="Index" />
+                </ul>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+    <!-- /.box -->
+
+</section>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#keyword").keyup(function () {
+                var strKeyword = $('#keyword').val();
+                $.ajax({
+                    url: '/Admin/Search/FindCategory/',
+                    datatype: "json",
+                    type: "POST",
+                    data: {
+                        keyword: strKeyword
+                    },
+                    async: true,
+                    success: function (results) {
+                        $("#records_table").html("");
+                        $("#records_table").html(results);
+                    },
+                    error: function (xhr) {
+                        alert('Có Lỗi Gì Rồi');
+                    }
+                })
+            })
+        });
+    </script>
+}

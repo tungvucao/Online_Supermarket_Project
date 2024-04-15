@@ -1,8 +1,24 @@
+﻿using AspNetCoreHero.ToastNotification;
+using Microsoft.EntityFrameworkCore;
+using Online_Supermarket_Project.AppContext;
+using System.Configuration;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+var setting = builder.Configuration.GetRequiredSection("ConnectionStrings");
+builder.Services.AddDbContext<MyAppDbContext>(
+        options =>
+        options.UseSqlServer(setting["DefaultConnection"]));
+
+// Các dịch vụ khác...
+
 builder.Services.AddControllersWithViews();
+builder.Services.AddSingleton<HtmlEncoder>(HtmlEncoder.Create(allowedRanges: new[] { UnicodeRanges.All }));
 builder.Services.AddSession();
+builder.Services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.TopRight; });
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 var app = builder.Build();
 
