@@ -1,0 +1,143 @@
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<Online_Supermarket_Project.Models.Product>
+
+@{
+    int CurrentPage = ViewBag.CurrentPage;
+    ViewData["Title"] = "Danh Sách Sản Phẩm " + CurrentPage;
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<section class="content-header">
+    <h1>
+        Danh Sách Sản Phẩm: page @CurrentPage
+    </h1>
+    <ol class="breadcrumb">
+        <li><a asp-area="Admin" asp-controller="Home" asp-action="Index"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a asp-area="Admin" asp-controller="AdminProducts" asp-action="Index">QL Sản Phẩm</a></li>
+        <li class="active">Danh Sách Sản Phẩm</li>
+    </ol>
+</section>
+
+<section class="content">
+
+    <!-- Default box -->
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <div>
+                    <a asp-area="Admin" asp-controller="AdminProducts" asp-action="Create" class="btn btn-success">+ Add Product</a>
+                </div>
+
+                <div class="box-tools" style="display:flex">
+                    <b style="padding:6px 20px 0px 0px; ">FilterBy</b>
+                    <select style="min-width:200px; margin-right:20px" id="txtCateId" name="txtCateId" class="form-control" asp-items="ViewBag.Category">
+                        <option selected>Category</option>
+                    </select>
+                    <div class="input-group input-group-sm" style="min-width: 250px;">
+                        <input type="text" name="keyword" id="keyword" style=" min-height:34px" class="form-control pull-right" placeholder="Search">
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Discount</th>
+                            <th>Image</th>
+                            <th>UnitsInStock</th>
+                        </tr>
+                    </thead>
+                    <tbody id="records_table">
+                        @if (Model != null)
+                        {
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.ProductId</td>
+                                    <td>@item.ProductName</td>
+                                    <td>@item.Cate?.CateName</td>
+                                    <td>@item.Price.Value.ToString("#,##0") VNĐ</td>
+                                    <td>@item.Discount</td>
+                                    <td>
+                                        <img src="/images/products/@item.Image" alt="User Image" width="80px" height="80px">
+                                    </td>
+                                    <td>@item.UnitsInStock</td>
+                                    <td>
+                                        <a asp-area="Admin" asp-controller="AdminProducts" asp-action="Details" asp-route-id="@item.ProductId" class="btn btn-success">Chi Tiết</a> |
+                                        <a asp-area="Admin" asp-controller="AdminProducts" asp-action="Edit" asp-route-id="@item.ProductId" class="btn btn-primary">Sửa</a> |
+                                        <a asp-area="Admin" asp-controller="AdminProducts" asp-action="Delete" asp-route-id="@item.ProductId" class="btn btn-danger">Xóa</a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="box-footer clearfix">
+                <ul class="pagination pagination-sm no-margin pull-right">
+                    <pager list="@Model" asp-area="Admin" asp-controller="AdminProducts" asp-route-CateId="@ViewBag.CurrentCateId" asp-action="Index" />
+                </ul>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+    <!-- /.box -->
+
+</section>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            jQuery("#txtCateId").change(function () {
+                var cateId = jQuery(this).children(":selected").attr("value");
+                cateId = parseFloat(cateId);
+                $('#txtCateId option').removeAttr('selected');
+                $("#txtCateId > [value=" + cateId + "]").attr("selected", "true");
+                
+                $.ajax({
+                    url: '/Admin/AdminProducts/Filter/',
+                    datatype: "json",
+                    type: "GET",
+                    data: {
+                        CateId: cateId
+                    },
+                    async: true,
+                    success: function (results) {
+                        if (results.status == "success") {
+                            window.location.href = results.redirectUrl;
+                        }
+                    },
+                    error: function (xhr) {
+                        alert('Error');
+                    }
+                });
+            });
+
+            $("#keyword").keyup(function () {
+                var strKeyword = $('#keyword').val();
+                $.ajax({
+                    url: '/Admin/Search/FindProduct/',
+                    datatype: "json",
+                    type: "POST",
+                    data: {
+                        keyword: strKeyword
+                    },
+                    async: true,
+                    success: function (results) {
+                        $("#records_table").html("");
+                        $("#records_table").html(results);
+                    },
+                    error: function (xhr) {
+                        alert('Error!');
+                    }
+                })
+            })
+        });
+    </script>
+}

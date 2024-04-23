@@ -1,0 +1,100 @@
+﻿@model Online_Supermarket_Project.Models.Product
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    var image = ViewBag.image;
+}
+
+<section class="content-header">
+    <h1>
+        Chính sửa Sản Phẩm 
+    </h1>
+    <ol class="breadcrumb">
+        <li><a asp-area="Admin" asp-controller="Home" asp-action="Index"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a asp-area="Admin" asp-controller="AdminProducts" asp-action="Index">QL Sản Phẩm</a></li>
+        <li class="active">Chính sửa Sản Phẩm</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-body">
+                <a class="btn btn-success" asp-area="Admin" asp-controller="AdminProducts" asp-action="Index">Back to List</a>
+            </div>
+            <form role="form" asp-area="Admin" asp-controller="AdminProducts" asp-action="Edit" asp-route-id="@Model.ProductId" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="ProductId" />
+                <input type="hidden" asp-for="CreatedDate" />
+                <input type="hidden" name="fImage" asp-for="Image" />
+                <div class="box-body">
+                    <div class="form-group">
+                        <label>Product Name</label>
+                        <input type="text" class="form-control" asp-for="ProductName" placeholder="Product Name">
+                        <span asp-validation-for="ProductName" class="text-danger"></span>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label>Price</label>
+                            <input type="number" class="form-control" asp-for="Price" placeholder="Price">
+                            <span asp-validation-for="Price" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Discount</label>
+                            <input type="number" class="form-control" asp-for="Discount" placeholder="Discount">
+                            <span asp-validation-for="Discount" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label>Category</label>
+                            <select class="form-control" asp-for="CateId" asp-items="ViewBag.Category">
+                                <option disabled selected>Select Category</option>
+                            </select>
+                            <span asp-validation-for="CateId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Units In Stock</label>
+                            <input type="number" class="form-control" asp-for="UnitsInStock" placeholder="Stock">
+                            <span asp-validation-for="UnitsInStock" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6" style="padding-left:0px">
+                            <label>Image</label>
+                            <input name="fImage" type="file" class="form-control" asp-for="Image">
+                            <span asp-validation-for="Image" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <img src="/images/products/@Model.Image" alt="User Image" width="100px" height="80px">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Short Description</label>
+                        <input type="text" class="form-control" asp-for="ShortDesc" placeholder="Short Description">
+                        <span asp-validation-for="ShortDesc" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea name="editor" id="editor">@Model.Description</textarea>
+                    </div>
+                </div>
+
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary" fdprocessedid="6rbro">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#editor'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+}
