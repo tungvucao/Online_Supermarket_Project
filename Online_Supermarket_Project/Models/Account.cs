@@ -27,7 +27,7 @@ namespace Online_Supermarket_Project.Models
         [MaxLength(100)]
         public string? FullName { get; set; }
 
-        public int? RoleId { get; set; }
+        public int RoleId { get; set; }
 
         public DateTime? LastLogin { get; set; }
         public DateTime? CreatedDate { get; set; }

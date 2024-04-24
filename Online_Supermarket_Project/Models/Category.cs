@@ -9,7 +9,7 @@ namespace Online_Supermarket_Project.Models
         [Key]
         public int CateId { get; set; }
         [MaxLength(100)]
-        public string? CateName { get; set; }
+        public string CateName { get; set; }
 
         public string? Desciption { get; set; }
         public bool Status { get; set; }

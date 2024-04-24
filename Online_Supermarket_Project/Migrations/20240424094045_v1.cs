@@ -17,7 +17,7 @@ namespace Online_Supermarket_Project.Migrations
                 {
                     AttributeId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -30,7 +30,7 @@ namespace Online_Supermarket_Project.Migrations
                 {
                     CateId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CateName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    CateName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Desciption = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
@@ -74,9 +74,9 @@ namespace Online_Supermarket_Project.Migrations
                     Alias = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Author = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AccountId = table.Column<int>(type: "int", nullable: true),
+                    AccountId = table.Column<int>(type: "int", nullable: false),
                     Tags = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CateId = table.Column<int>(type: "int", nullable: true),
+                    CateId = table.Column<int>(type: "int", nullable: false),
                     IsHot = table.Column<bool>(type: "bit", nullable: false),
                     IsNewFeed = table.Column<bool>(type: "bit", nullable: false),
                     MetaKey = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -94,7 +94,7 @@ namespace Online_Supermarket_Project.Migrations
                 {
                     PageId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PageName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PageName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Contents = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Thumb = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Published = table.Column<bool>(type: "bit", nullable: false),
@@ -116,7 +116,7 @@ namespace Online_Supermarket_Project.Migrations
                 {
                     RoleId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    RoleName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -163,7 +163,7 @@ namespace Online_Supermarket_Project.Migrations
                     ProductName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     ShortDesc = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CateId = table.Column<int>(type: "int", nullable: true),
+                    CateId = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<int>(type: "int", nullable: true),
                     Discount = table.Column<int>(type: "int", nullable: true),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -181,7 +181,8 @@ namespace Online_Supermarket_Project.Migrations
                         name: "FK_Product_Category_CateId",
                         column: x => x.CateId,
                         principalTable: "Category",
-                        principalColumn: "CateId");
+                        principalColumn: "CateId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -190,11 +191,11 @@ namespace Online_Supermarket_Project.Migrations
                 {
                     CusId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Birthday = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Avatar = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LocationId = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -225,7 +226,7 @@ namespace Online_Supermarket_Project.Migrations
                     Salt = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     FullName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    RoleId = table.Column<int>(type: "int", nullable: true),
+                    RoleId = table.Column<int>(type: "int", nullable: false),
                     LastLogin = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -236,7 +237,8 @@ namespace Online_Supermarket_Project.Migrations
                         name: "FK_Account_Roles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "Roles",
-                        principalColumn: "RoleId");
+                        principalColumn: "RoleId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -273,7 +275,7 @@ namespace Online_Supermarket_Project.Migrations
                 {
                     OrderId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CusId = table.Column<int>(type: "int", nullable: true),
+                    CusId = table.Column<int>(type: "int", nullable: false),
                     OrderDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     ShipDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     TransactStatusId = table.Column<int>(type: "int", nullable: true),
@@ -290,7 +292,8 @@ namespace Online_Supermarket_Project.Migrations
                         name: "FK_Order_Customer_CusId",
                         column: x => x.CusId,
                         principalTable: "Customer",
-                        principalColumn: "CusId");
+                        principalColumn: "CusId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Order_TransactStatus_TransactStatusId",
                         column: x => x.TransactStatusId,
@@ -304,8 +307,8 @@ namespace Online_Supermarket_Project.Migrations
                 {
                     OrderDetailId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    OrderId = table.Column<int>(type: "int", nullable: true),
-                    ProductId = table.Column<int>(type: "int", nullable: true),
+                    OrderId = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
                     OrderNumber = table.Column<int>(type: "int", nullable: true),
                     Quantity = table.Column<int>(type: "int", nullable: true),
                     Discount = table.Column<int>(type: "int", nullable: true),
@@ -319,7 +322,8 @@ namespace Online_Supermarket_Project.Migrations
                         name: "FK_OrderDetail_Order_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Order",
-                        principalColumn: "OrderId");
+                        principalColumn: "OrderId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

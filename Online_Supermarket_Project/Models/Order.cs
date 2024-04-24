@@ -9,7 +9,7 @@ namespace Online_Supermarket_Project.Models
         [Key]
         public int OrderId { get; set; }
 
-        public int? CusId { get; set; }
+        public int CusId { get; set; }
 
         public DateTime? OrderDate { get; set; }
 

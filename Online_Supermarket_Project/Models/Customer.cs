@@ -9,7 +9,7 @@ namespace Online_Supermarket_Project.Models
         [Key]
         public int CusId { get; set; }
 
-        public string? FullName { get; set; }
+        public string FullName { get; set; }
 
         public DateTime? Birthday { get; set; }
 
@@ -17,7 +17,7 @@ namespace Online_Supermarket_Project.Models
 
         public string? Address { get; set; }
 
-        public string? Email { get; set; }
+        public string Email { get; set; }
 
         public string? Phone { get; set; }
 

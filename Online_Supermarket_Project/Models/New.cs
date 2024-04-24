@@ -25,11 +25,11 @@ namespace Online_Supermarket_Project.Models
 
         public string? Author { get; set; }
 
-        public int? AccountId { get; set; }
+        public int AccountId { get; set; }
 
         public string? Tags { get; set; }
 
-        public int? CateId { get; set; }
+        public int CateId { get; set; }
 
         public bool IsHot { get; set; }
 
