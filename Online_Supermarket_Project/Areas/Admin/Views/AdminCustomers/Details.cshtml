@@ -1,0 +1,166 @@
+﻿@model Online_Supermarket_Project.Models.Customer
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<section class="content-header">
+    <h1>
+        Chi tiết Khách hàng
+    </h1>
+    <ol class="breadcrumb">
+        <li><a asp-area="Admin" asp-controller="Home" asp-action="Index"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a asp-area="Admin" asp-controller="AdminCustomers" asp-action="Index">QL khách hàng</a></li>
+        <li class="active">Chi tiết Danh Mục</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-body">
+                <div>
+                    <a class="btn btn-success" asp-area="Admin" asp-controller="AdminCustomers" asp-action="Index">Back to List</a>
+                </div>
+                <br />
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <td>ID: </td>
+                            <td>@Model.CusId</td>
+                        </tr>
+                        <tr>
+                            <td>Name: </td>
+                            <td>@Model.FullName</td>
+                        </tr>
+                        <tr>
+                            <td>Status: </td>
+                            <td>
+                                @if (Model.Status)
+                                {
+                                    <span class="label label-success">Active</span>
+                                }
+                                else
+                                {
+                                    <span class="label label-danger">Inactive</span>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Email: </td>
+                            <td>@Model.Email</td>
+                        </tr>
+                        <tr>
+                            <td>Phone: </td>
+                            <td>@Model.Phone</td>
+                        </tr>
+                        <tr>
+                            <td>CreatedDate: </td>
+                            <td>@Model.CreatedDate</td>
+                        </tr>
+                         <tr>
+                            <td>LastLogin: </td>
+                            <td>@Model.LastLogin</td>
+                        </tr>
+                        <tr>
+                            <td>Birthday: </td>
+                            <td>@Model.Birthday</td>
+                        </tr>
+                        <tr>
+                            <td>Edit: </td>
+                            <td>
+                                <div>
+                                    <a class="btn btn-primary" asp-area="Admin" asp-controller="AdminCustomers" asp-action="Edit" asp-route-id="@Model.CusId">Edit</a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div>
+    <h4>Customer</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FullName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FullName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Birthday)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Birthday)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Avatar)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Avatar)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Phone)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Password)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Salt)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Salt)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LastLogin)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LastLogin)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Location)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Location.LocationId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.CusId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

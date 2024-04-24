@@ -1,0 +1,100 @@
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<Online_Supermarket_Project.Models.Customer>
+
+@{
+    int CurrentPage = ViewBag.CurrentPage;
+    ViewData["Title"] = "Danh Sách Khách Hàng " + CurrentPage;
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<section class="content-header">
+    <h1>
+        Danh Sách Khách Hàng: page @CurrentPage
+    </h1>
+    <ol class="breadcrumb">
+        <li><a asp-area="Admin" asp-controller="Home" asp-action="Index"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a asp-area="Admin" asp-controller="AdminCustomers" asp-action="Index">QL Khách Hàng</a></li>
+        <li class="active">Danh Sách Khách Hàng</li>
+    </ol>
+</section>
+
+<section class="content">
+
+    <!-- Default box -->
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <div style="display:flex">
+                    <a asp-area="Admin" asp-controller="AdminCustomers" asp-action="Create" style="margin-right:20px" class="btn btn-success">+ Add Customer</a>
+                    <select style="max-width:200px; margin-right:20px" id="idRole" name="idRole" class="form-control" asp-items="ViewBag.Roles">
+                        <option value="">Select Role</option>
+                    </select>
+                    <select style="max-width:200px;" id="idActive" name="idActive" class="form-control" asp-items="ViewBag.AcountActive">
+                        <option value="">Status</option>
+                    </select>
+                </div>
+
+                <div class="box-tools">
+                    <div class="input-group input-group-sm" style="width: 250px;">
+                        <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Info</th>
+                            <th>Address</th>
+                            <th>District</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.CusId</td>
+                                    <td>
+                                        <p>@item.FullName</p>
+                                        <p>@item.Email</p>
+                                        <p>@item.Phone</p>
+                                    </td>
+                                    <td>@item.Address</td>
+                                    <td>@item.Location.Name</td>
+                                    <td>
+                                        <a asp-area="Admin" asp-controller="AdminCustomers" asp-action="Details" asp-route-id="@item.CusId" class="btn btn-success">Chi Tiết</a> |
+                                        <a asp-area="Admin" asp-controller="AdminCustomers" asp-action="Edit" asp-route-id="@item.CusId" class="btn btn-primary">Sửa</a> |
+                                        <a asp-area="Admin" asp-controller="AdminCustomers" asp-action="Delete" asp-route-id="@item.CusId" class="btn btn-danger">Xóa</a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td><h3>Không có bản ghi nào</h3></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="box-footer clearfix">
+                <ul class="pagination pagination-sm no-margin pull-right">
+                    <pager list="@Model" asp-area="Admin" asp-controller="AdminCustomers" asp-action="Index" />
+                </ul>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+    <!-- /.box -->
+
+</section>

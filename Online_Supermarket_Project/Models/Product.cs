@@ -16,7 +16,7 @@ namespace Online_Supermarket_Project.Models
 
         public string? Description { get; set; }
 
-        public int? CateId { get; set; }
+        public int CateId { get; set; }
 
         public int? Price { get; set; }
 

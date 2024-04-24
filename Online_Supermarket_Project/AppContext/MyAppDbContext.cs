@@ -22,6 +22,8 @@ namespace Online_Supermarket_Project.AppContext
         public DbSet<Product> Product { get; set; }
         public DbSet<Shipper> Shipper { get; set; }
         public DbSet<TransactStatus> TransactStatus { get; set; }
+        public DbSet<Customer> Customers  { get; set; }
+
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{

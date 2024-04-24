@@ -10,7 +10,7 @@ namespace Online_Supermarket_Project.Models
         public int RoleId { get; set; }
 
         [MaxLength(50)] // Đặt độ dài tối đa cho RoleName
-        public string? RoleName { get; set; }
+        public string RoleName { get; set; }
 
         public string? Description { get; set; }
 

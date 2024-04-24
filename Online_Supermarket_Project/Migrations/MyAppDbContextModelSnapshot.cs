@@ -17,7 +17,7 @@ namespace Online_Supermarket_Project.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.3")
+                .HasAnnotation("ProductVersion", "8.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -52,7 +52,7 @@ namespace Online_Supermarket_Project.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<int?>("RoleId")
+                    b.Property<int>("RoleId")
                         .HasColumnType("int");
 
                     b.Property<string>("Salt")
@@ -77,6 +77,7 @@ namespace Online_Supermarket_Project.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AttributeId"));
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("AttributeId");
@@ -129,6 +130,7 @@ namespace Online_Supermarket_Project.Migrations
                         .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("CateName")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -168,9 +170,11 @@ namespace Online_Supermarket_Project.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FullName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("LastLogin")
@@ -240,7 +244,7 @@ namespace Online_Supermarket_Project.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("NewId"));
 
-                    b.Property<int?>("AccountId")
+                    b.Property<int>("AccountId")
                         .HasColumnType("int");
 
                     b.Property<string>("Alias")
@@ -249,7 +253,7 @@ namespace Online_Supermarket_Project.Migrations
                     b.Property<string>("Author")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CateId")
+                    b.Property<int>("CateId")
                         .HasColumnType("int");
 
                     b.Property<string>("Content")
@@ -301,7 +305,7 @@ namespace Online_Supermarket_Project.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"));
 
-                    b.Property<int?>("CusId")
+                    b.Property<int>("CusId")
                         .HasColumnType("int");
 
                     b.Property<bool?>("Deleted")
@@ -348,13 +352,13 @@ namespace Online_Supermarket_Project.Migrations
                     b.Property<int?>("Discount")
                         .HasColumnType("int");
 
-                    b.Property<int?>("OrderId")
+                    b.Property<int>("OrderId")
                         .HasColumnType("int");
 
                     b.Property<int?>("OrderNumber")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ProductId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<int?>("Quantity")
@@ -400,6 +404,7 @@ namespace Online_Supermarket_Project.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("PageName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Published")
@@ -427,7 +432,7 @@ namespace Online_Supermarket_Project.Migrations
                     b.Property<string>("Alias")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CateId")
+                    b.Property<int>("CateId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("CreatedDate")
@@ -445,7 +450,7 @@ namespace Online_Supermarket_Project.Migrations
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("Price")
+                    b.Property<int>("Price")
                         .HasColumnType("int");
 
                     b.Property<string>("ProductName")
@@ -484,6 +489,7 @@ namespace Online_Supermarket_Project.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RoleName")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -540,7 +546,9 @@ namespace Online_Supermarket_Project.Migrations
                 {
                     b.HasOne("Online_Supermarket_Project.Models.Roles", "Role")
                         .WithMany("Accounts")
-                        .HasForeignKey("RoleId");
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Role");
                 });
@@ -577,7 +585,9 @@ namespace Online_Supermarket_Project.Migrations
                 {
                     b.HasOne("Online_Supermarket_Project.Models.Customer", "Customer")
                         .WithMany("Orders")
-                        .HasForeignKey("CusId");
+                        .HasForeignKey("CusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Online_Supermarket_Project.Models.TransactStatus", "TransactStatus")
                         .WithMany("Orders")
@@ -592,7 +602,9 @@ namespace Online_Supermarket_Project.Migrations
                 {
                     b.HasOne("Online_Supermarket_Project.Models.Order", "Order")
                         .WithMany("OrderDetails")
-                        .HasForeignKey("OrderId");
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Order");
                 });
@@ -601,7 +613,9 @@ namespace Online_Supermarket_Project.Migrations
                 {
                     b.HasOne("Online_Supermarket_Project.Models.Category", "Cate")
                         .WithMany("Products")
-                        .HasForeignKey("CateId");
+                        .HasForeignKey("CateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Cate");
                 });

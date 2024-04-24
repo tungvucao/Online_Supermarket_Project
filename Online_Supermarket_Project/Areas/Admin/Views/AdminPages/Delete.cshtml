@@ -1,0 +1,77 @@
+﻿@model Online_Supermarket_Project.Models.Page
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<section class="content-header">
+    <h1>
+        Xóa Page: @Model.PageName
+    </h1>
+    <ol class="breadcrumb">
+        <li><a asp-area="Admin" asp-controller="Home" asp-action="Index"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a asp-area="Admin" asp-controller="AdminPages" asp-action="Index">QL Pages</a></li>
+        <li class="active">Xóa Page</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-body">
+                <div>
+                    <a class="btn btn-success" asp-area="Admin" asp-controller="AdminPages" asp-action="Index">Back to List</a>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-5">
+                        <img src="/images/pages/@Model.Thumb" alt="User Image" width=500px"">
+                    </div>
+                    <div class="col-md-7">
+                        <table class="table table-striped ">
+                            <tbody>
+                                <tr>
+                                    <td>ID: </td>
+                                    <td>@Model.PageId</td>
+                                </tr>
+                                <tr>
+                                    <td>Name: </td>
+                                    <td>@Model.PageName</td>
+                                </tr>
+                                <tr>
+                                    <td>Title: </td>
+                                    <td>@Model.Title</td>
+                                </tr>
+                                <tr>
+                                    <td>Status: </td>
+                                    <td>
+                                        @if (Model.Published)
+                                        {
+                                            <span class="label label-success">Active</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="label label-danger">Inactive</span>
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Delete: </td>
+                                    <td>
+                                        <form asp-controller="AdminPages" asp-action="Delete">
+                                            <input type="hidden" asp-for="PageId" />
+                                            <input type="submit" value="Delete" class="btn btn-danger" />
+                                        </form>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <br />
+            </div>
+        </div>
+    </div>

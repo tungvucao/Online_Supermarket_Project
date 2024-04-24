@@ -1,0 +1,94 @@
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<Online_Supermarket_Project.Models.Page>
+
+@{
+    int CurrentPage = ViewBag.CurrentPage;
+    ViewData["Title"] = "Danh Sách Page";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<section class="content-header">
+    <h1>
+        Danh Sách Pages: page @CurrentPage
+    </h1>
+    <ol class="breadcrumb">
+        <li><a asp-area="Admin" asp-controller="Home" asp-action="Index"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a asp-area="Admin" asp-controller="AdminPages" asp-action="Index">QL Pages</a></li>
+        <li class="active">Danh Sách Pages</li>
+    </ol>
+</section>
+
+<section class="content">
+
+    <!-- Default box -->
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <div style="display:flex">
+                    <a asp-area="Admin" asp-controller="AdminPages" asp-action="Create" style="margin-right:20px" class="btn btn-success">+ Add Page</a> 
+                </div>
+
+                <div class="box-tools">
+                    <div class="input-group input-group-sm" style="width: 250px;">
+                        <input type="text" style=" min-height:34px" name="table_search" class="form-control pull-right" placeholder="Search">
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>PageName</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.PageId</td>
+                                    <td>@item.PageName</td>
+                                    <td>
+                                        @if (@item.Published)
+                                        {
+                                            <span class="label label-success">Active</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="label label-danger">Inactive</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <a asp-area="Admin" asp-controller="AdminPages" asp-action="Details" asp-route-id="@item.PageId" class="btn btn-success">Chi Tiết</a> |
+                                        <a asp-area="Admin" asp-controller="AdminPages" asp-action="Edit" asp-route-id="@item.PageId" class="btn btn-primary">Sửa</a> |
+                                        <a asp-area="Admin" asp-controller="AdminPages" asp-action="Delete" asp-route-id="@item.PageId" class="btn btn-danger">Xóa</a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td><h3>Không có bản ghi nào</h3></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="box-footer clearfix">
+                <ul class="pagination pagination-sm no-margin pull-right">
+                    <pager list="@Model" asp-area="Admin" asp-controller="AdminPages" asp-action="Index" />
+                </ul>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+    <!-- /.box -->
+
+</section>

@@ -34,18 +34,11 @@ namespace Online_Supermarket_Project.Areas.Admin.Controllers
 
             if (CateId != 0)
             {
-                lsProducts = _context.Product
-                .AsNoTracking()
-                .Where(x => x.CateId == CateId)
-                .Include(p => p.Cate)
-                .ToList();
+                lsProducts = _context.Product.AsNoTracking().Where(x => x.CateId == CateId).Include(p => p.Cate).ToList();
             }
             else
             {
-                lsProducts = _context.Product
-                .AsNoTracking()
-                .Include(p => p.Cate)
-                .ToList();
+                lsProducts = _context.Product.AsNoTracking().Include(p => p.Cate).ToList();
             }
 
             PagedList<Product> models = new PagedList<Product>(lsProducts.AsQueryable(), pageNumber, pageSize);
@@ -99,21 +92,8 @@ namespace Online_Supermarket_Project.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(IFormCollection formValues, Microsoft.AspNetCore.Http.IFormFile fImage, [Bind("ProductId,ProductName,ShortDesc,Description,CateId,Price,Discount,Image,CreatedDate,ModifiedDate,Status,Title,Alias,UnitsInStock")] Product product)
+        public async Task<IActionResult> Create(IFormCollection formValues, Microsoft.AspNetCore.Http.IFormFile? fImage, [Bind("ProductId,ProductName,ShortDesc,Description,CateId,Price,Discount,Image,CreatedDate,ModifiedDate,Status,Title,Alias,UnitsInStock")] Product product)
         {
-            if (fImage == null || fImage.Length == 0)
-            {
-                _notyfService.Warning("Choose any image!");
-                ViewData["Category"] = new SelectList(_context.Category, "CateId", "CateName", product.CateId);
-                return View();
-
-            }
-            if (product.CateId == null )
-            {
-                _notyfService.Warning("Choose any category!");
-                ViewData["Category"] = new SelectList(_context.Category, "CateId", "CateName", product.CateId);
-                return View();
-            }
             if (ModelState.IsValid)
             {
                 product.ProductName = Utilities.ToTitleCase(product.ProductName);
@@ -165,19 +145,6 @@ namespace Online_Supermarket_Project.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            if (fImage == null || fImage.Length == 0)
-            {
-                _notyfService.Warning("Choose any image!");
-                ViewData["Category"] = new SelectList(_context.Category, "CateId", "CateName", product.CateId);
-                return View(product);
-
-            }
-            if (product.CateId == null)
-            {
-                _notyfService.Warning("Choose any category!");
-                ViewData["Category"] = new SelectList(_context.Category, "CateId", "CateName", product.CateId);
-                return View(product);
-            }
             if (ModelState.IsValid)
             {
                 try
@@ -187,17 +154,8 @@ namespace Online_Supermarket_Project.Areas.Admin.Controllers
                     product.ModifiedDate = DateTime.Now;
                     product.Description = formValues["editor"];
                     
-                    if (fImage != null && fImage.Length >0)
+                    if (fImage != null)
                     {
-                        if (!string.IsNullOrEmpty(product.Image) || product.Image != null)
-                        {
-                            //delete old image
-                            string oldImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", @"products", product.Image.TrimStart('/'));
-                            if (System.IO.File.Exists(oldImagePath))
-                            {
-                                System.IO.File.Delete(oldImagePath);
-                            }
-                        }
                         string extension = Path.GetExtension(fImage.FileName);
                         string image = Utilities.ToUrlFriendly(fImage.FileName) + extension;
                         product.Image = await Utilities.UploadFile(fImage, @"products", image.ToLower());
