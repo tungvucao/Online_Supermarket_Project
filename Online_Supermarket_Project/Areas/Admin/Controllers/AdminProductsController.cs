@@ -100,6 +100,14 @@ namespace Online_Supermarket_Project.Areas.Admin.Controllers
                 
                 if (fImage != null)
                 {
+                    var supportedTypes = new[] { "jpg", "jpeg", "png" };
+                    var fileExt = Path.GetExtension(fImage.FileName).Substring(1);
+                    if (!supportedTypes.Contains(fileExt.ToLower()))
+                    {
+                        _notyfService.Warning("Supported Types Image: jpg,jpeg,png! Please choose another image.");
+                        ViewData["Category"] = new SelectList(_context.Category, "CateId", "CateName", product.CateId);
+                        return View();
+                    }
                     string extension = Path.GetExtension(fImage.FileName);
                     string image = Utilities.ToUrlFriendly(fImage.FileName) + extension;
                     product.Image = await Utilities.UploadFile(fImage, @"products", image.ToLower());
@@ -156,6 +164,14 @@ namespace Online_Supermarket_Project.Areas.Admin.Controllers
                     
                     if (fImage != null)
                     {
+                        var supportedTypes = new[] { "jpg", "jpeg", "png" };
+                        var fileExt = Path.GetExtension(fImage.FileName).Substring(1);
+                        if (!supportedTypes.Contains(fileExt.ToLower()))
+                        {
+                            _notyfService.Warning("Supported Types Image: jpg,jpeg,png! Please choose another image.");
+                            ViewData["Category"] = new SelectList(_context.Category, "CateId", "CateName", product.CateId);
+                            return View(product);
+                        }
                         string extension = Path.GetExtension(fImage.FileName);
                         string image = Utilities.ToUrlFriendly(fImage.FileName) + extension;
                         product.Image = await Utilities.UploadFile(fImage, @"products", image.ToLower());

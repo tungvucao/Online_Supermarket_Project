@@ -66,7 +66,7 @@ namespace Online_Supermarket_Project.Migrations
                 {
                     NewId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ShortContent = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Thumb = table.Column<string>(type: "nvarchar(max)", nullable: true),
