@@ -9,7 +9,7 @@ namespace Online_Supermarket_Project.Models
         [Key]
         public int NewId { get; set; }
 
-        public string? Title { get; set; }
+        public string Title { get; set; }
 
         public string? ShortContent { get; set; }
 

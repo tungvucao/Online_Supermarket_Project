@@ -1,0 +1,94 @@
+﻿@model Online_Supermarket_Project.Models.New
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<section class="content-header">
+    <h1>
+        New Detail
+    </h1>
+    <ol class="breadcrumb">
+        <li><a asp-area="Admin" asp-controller="Home" asp-action="Index"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a asp-area="Admin" asp-controller="AdminNews" asp-action="Index">News Management</a></li>
+        <li class="active">New Detail</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-body">
+                <div>
+                    <a class="btn btn-success" asp-area="Admin" asp-controller="AdminNews" asp-action="Index">Back to List</a>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-5">
+                        <img src="/images/news/@Model.Thumb" alt="User Image" width=500px"">
+                    </div>
+                    <div class="col-md-7">
+                        <table class="table table-striped ">
+                            <tbody>
+                                <tr>
+                                    <td>ID: </td>
+                                    <td>@Model.NewId</td>
+                                </tr>
+                                <tr>
+                                    <td>Name: </td>
+                                    <td>@Model.Title</td>
+                                </tr>
+                                <tr>
+                                    <td>Status: </td>
+                                    <td>
+                                        @if (Model.Published)
+                                        {
+                                            <span class="label label-success">Active</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="label label-danger">Inactive</span>
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Is New Feed: </td>
+                                    <td>
+                                        @if (Model.IsHot)
+                                        {
+                                            <span class="label label-success">New Feed</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="label label-danger">-</span>
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Is Hot: </td>
+                                    <td>
+                                        @if (Model.IsNewFeed)
+                                        {
+                                            <span class="label label-success">Hot</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="label label-danger">-</span>
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Update: </td>
+                                    <td><a class="btn btn-primary" asp-area="Admin" asp-controller="AdminNews" asp-action="Edit" asp-route-id="@Model.NewId">Edit</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                </div>
+                <br />
+            </div>
+        </div>
+    </div>
+</section>
