@@ -18,13 +18,20 @@ namespace Online_Supermarket_Project.Controllers
         [HttpGet("/sanpham")]
        public IActionResult Index(int? page,int sort=0)
         {
-            int pageSize = 8;
+            int pageSize = 6;
             int pageNumber = page == null || page < 0 ? 1 : page.Value;
             PagedList<Product> lst;
 
             if (sort == 1)
             {
                 var lstsanpham = _db.Product.AsNoTracking().OrderBy(x => x.Price);
+                lst = new PagedList<Product>(lstsanpham, pageNumber, pageSize);
+
+
+            }
+            else if (sort == 2)
+            {
+                var lstsanpham = _db.Product.AsNoTracking().OrderByDescending(x => x.Price);
                 lst = new PagedList<Product>(lstsanpham, pageNumber, pageSize);
 
 
@@ -36,15 +43,6 @@ namespace Online_Supermarket_Project.Controllers
             }
 
             return View(lst);
-        }
-        public IActionResult GiaTangDan(int? page)
-        {
-            int pageSize = 8;
-            int pageNumber = page == null || page < 0 ? 1 : page.Value;
-            var lstsanpham = _db.Product.AsNoTracking().OrderBy(x => x.Price);
-            PagedList<Product> lst = new PagedList<Product>(lstsanpham, pageNumber, pageSize);
-
-            return View("Index", lst);
         }
     }
 }
