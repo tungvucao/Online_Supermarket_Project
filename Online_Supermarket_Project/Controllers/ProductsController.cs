@@ -15,7 +15,7 @@ namespace Online_Supermarket_Project.Controllers
             _db = db;
             _logger = logger;
         }
-        [HttpGet("/sanpham")]
+        [HttpGet("/Products")]
        public IActionResult Index(int? page,int sort=0)
         {
             int pageSize = 6;
