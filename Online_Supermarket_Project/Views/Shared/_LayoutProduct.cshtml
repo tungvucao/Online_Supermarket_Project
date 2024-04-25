@@ -394,11 +394,17 @@
                         <div class="row">
                             <div class="col-lg-4 col-md-5">
                                 <div class="filter__sort">
+                                   @*  <span>Sort By</span>
+                                    <select id="sortBySelect">
+                                        <option value="@Url.Action("Index", "Products", new { page = ViewBag.CurrentPage, sort = 0 })">Default</option>
+                                        <option value="@Url.Action("Index", "Products", new { page = ViewBag.CurrentPage, sort = 1 })">Gia Tang Dan</option>
+                                    </select> *@
                                     <span>Sort By</span>
-                                    <select>
-                                        <option value="0">Default</option>
-                                        <option value="0">Default</option>
-                                    </select>
+                                        <a class="dropdown-item" href="@Url.Action("Index", "Products", new { page = ViewBag.CurrentPage, sort = 0 })">Default</a>
+                                        <a class="dropdown-item" href="@Url.Action("Index", "Products", new { page = ViewBag.CurrentPage, sort = 1 })">Giá tăng dần</a>
+
+                                    
+
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-4">
@@ -515,3 +521,13 @@
 </body>
 
 </html>
+@* @section Scripts {
+    <script>
+        document.getElementById("sortBySelect").onchange = function () {
+            var selectedOption = this.options[this.selectedIndex];
+            if (selectedOption.value !== "0") {
+                window.location.href = selectedOption.value;
+            }
+        };
+    </script>
+} *@

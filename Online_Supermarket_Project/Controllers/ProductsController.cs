@@ -16,14 +16,35 @@ namespace Online_Supermarket_Project.Controllers
             _logger = logger;
         }
         [HttpGet("/sanpham")]
-        public IActionResult Index(int? page)
+       public IActionResult Index(int? page,int sort=0)
         {
             int pageSize = 8;
             int pageNumber = page == null || page < 0 ? 1 : page.Value;
-            var lstsanpham = _db.Product.AsNoTracking().OrderBy(x => x.ProductName);
-            PagedList<Product> lst = new PagedList<Product>(lstsanpham, pageNumber, pageSize);
+            PagedList<Product> lst;
+
+            if (sort == 1)
+            {
+                var lstsanpham = _db.Product.AsNoTracking().OrderBy(x => x.Price);
+                lst = new PagedList<Product>(lstsanpham, pageNumber, pageSize);
+
+
+            }
+            else
+            {
+                var lstsanpham = _db.Product.AsNoTracking().OrderBy(x => x.ProductName);
+                lst = new PagedList<Product>(lstsanpham, pageNumber, pageSize);
+            }
 
             return View(lst);
+        }
+        public IActionResult GiaTangDan(int? page)
+        {
+            int pageSize = 8;
+            int pageNumber = page == null || page < 0 ? 1 : page.Value;
+            var lstsanpham = _db.Product.AsNoTracking().OrderBy(x => x.Price);
+            PagedList<Product> lst = new PagedList<Product>(lstsanpham, pageNumber, pageSize);
+
+            return View("Index", lst);
         }
     }
 }
