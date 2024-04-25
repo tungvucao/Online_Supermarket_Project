@@ -1,6 +1,7 @@
 ﻿using AspNetCoreHero.ToastNotification;
 using Microsoft.EntityFrameworkCore;
 using Online_Supermarket_Project.AppContext;
+using Online_Supermarket_Project.Repository;
 using System.Configuration;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
@@ -13,6 +14,9 @@ builder.Services.AddDbContext<MyAppDbContext>(
         options =>
         options.UseSqlServer(setting["DefaultConnection"]));
 
+var connectionString = builder.Configuration.GetConnectionString("MyAppDbContext");
+builder.Services.AddDbContext<MyAppDbContext>(x => x.UseSqlServer(connectionString));
+builder.Services.AddScoped<ILoaiSpRepository, LoaiSpRepository>();
 // Các dịch vụ khác...
 
 builder.Services.AddControllersWithViews();
