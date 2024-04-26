@@ -67,5 +67,15 @@ namespace Online_Supermarket_Project.Controllers
             ViewBag.maloai = maloai;
             return View("Index",lst);
         }
+
+        public IActionResult ChiTietSanPham(int masp)
+        {
+            var pr = _db.Product.Where(x => x.ProductId == masp).FirstOrDefault();
+            if (pr == null)
+            {
+                return View("Erron");
+            }
+            return View(pr);
+        }
     }
 }
