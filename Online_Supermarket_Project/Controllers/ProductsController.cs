@@ -16,7 +16,7 @@ namespace Online_Supermarket_Project.Controllers
             _logger = logger;
         }
         [HttpGet("/Products")]
-        public IActionResult Index(int? page, int sort = 0)
+        public IActionResult Index(int? page, int sort)
         {
             int pageSize = 6;
             int pageNumber = page == null || page < 0 ? 1 : page.Value;
@@ -65,7 +65,7 @@ namespace Online_Supermarket_Project.Controllers
             var lstsanpham = _db.Product.AsNoTracking().Where(x => x.CateId == maloai).OrderBy(x => x.ProductName);
             PagedList<Product> lst = new PagedList<Product>(lstsanpham, pageNumber, pageSize);
             ViewBag.maloai = maloai;
-            return View(lst);
+            return View("Index",lst);
         }
     }
 }
