@@ -57,16 +57,7 @@ namespace Online_Supermarket_Project.Controllers
 
             return View("Index", lst); // Chuyển đến view Index và truyền danh sách sản phẩm đã tìm kiếm
         }
-        public IActionResult SanPhamMoi()
-        {
-            // Lấy 3 sản phẩm mới nhất dựa trên trường CreatedDate (hoặc ModifiedDate)
-            var newestProducts = _db.Product.AsNoTracking()
-                                        .OrderByDescending(x => x.CreatedDate)
-                                        .Take(3)
-                                        .ToList();
-
-            return View(newestProducts);
-        }
+        
         public IActionResult SanPhamTheoLoai(int maloai, int? page)
         {
             int pageSize = 6;
