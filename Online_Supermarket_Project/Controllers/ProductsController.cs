@@ -16,7 +16,7 @@ namespace Online_Supermarket_Project.Controllers
             _logger = logger;
         }
         [HttpGet("/Products")]
-       public IActionResult Index(int? page,int sort=0)
+        public IActionResult Index(int? page, int sort = 0)
         {
             int pageSize = 6;
             int pageNumber = page == null || page < 0 ? 1 : page.Value;
@@ -56,6 +56,16 @@ namespace Online_Supermarket_Project.Controllers
             var lst = new PagedList<Product>(lstsanpham, pageNumber, pageSize);
 
             return View("Index", lst); // Chuyển đến view Index và truyền danh sách sản phẩm đã tìm kiếm
+        }
+        public IActionResult SanPhamMoi()
+        {
+            // Lấy 3 sản phẩm mới nhất dựa trên trường CreatedDate (hoặc ModifiedDate)
+            var newestProducts = _db.Product.AsNoTracking()
+                                        .OrderByDescending(x => x.CreatedDate)
+                                        .Take(3)
+                                        .ToList();
+
+            return View(newestProducts);
         }
     }
 }
