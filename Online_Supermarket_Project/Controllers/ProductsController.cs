@@ -44,5 +44,18 @@ namespace Online_Supermarket_Project.Controllers
 
             return View(lst);
         }
+        public IActionResult TimKiem(string searchTerm, int? page)
+        {
+            int pageSize = 6;
+            int pageNumber = page ?? 1;
+
+            // Lấy danh sách sản phẩm từ cơ sở dữ liệu dựa trên từ khóa tìm kiếm
+            var lstsanpham = _db.Product.AsNoTracking().Where(x => x.ProductName.Contains(searchTerm ?? "")).OrderBy(x => x.ProductName);
+
+            // Phân trang cho danh sách sản phẩm
+            var lst = new PagedList<Product>(lstsanpham, pageNumber, pageSize);
+
+            return View("Index", lst); // Chuyển đến view Index và truyền danh sách sản phẩm đã tìm kiếm
+        }
     }
 }
