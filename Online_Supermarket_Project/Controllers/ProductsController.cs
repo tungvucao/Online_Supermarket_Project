@@ -67,5 +67,14 @@ namespace Online_Supermarket_Project.Controllers
 
             return View(newestProducts);
         }
+        public IActionResult SanPhamTheoLoai(int maloai, int? page)
+        {
+            int pageSize = 6;
+            int pageNumber = page == null || page < 0 ? 1 : page.Value;
+            var lstsanpham = _db.Product.AsNoTracking().Where(x => x.CateId == maloai).OrderBy(x => x.ProductName);
+            PagedList<Product> lst = new PagedList<Product>(lstsanpham, pageNumber, pageSize);
+            ViewBag.maloai = maloai;
+            return View(lst);
+        }
     }
 }

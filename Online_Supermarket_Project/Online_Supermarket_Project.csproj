@@ -30,7 +30,6 @@
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="wwwroot\images\news\" />
     <Folder Include="wwwroot\images\pages\" />
-    <Folder Include="wwwroot\images\products\" />
   </ItemGroup>
 
   <ItemGroup>
