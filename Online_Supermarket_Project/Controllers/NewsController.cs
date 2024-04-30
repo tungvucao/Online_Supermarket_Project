@@ -27,5 +27,14 @@ namespace Online_Supermarket_Project.Controllers
 
             return View(pagedNews); // Trả về IPagedList<New> thay vì StaticPagedList<New>
         }
+        public IActionResult ChiTietNews(int maNews)
+        {
+            var pr = _db.New.Where(x => x.NewId == maNews).FirstOrDefault();
+            if (pr == null)
+            {
+                return View("Erron");
+            }
+            return View(pr);
+        }
     }
 }

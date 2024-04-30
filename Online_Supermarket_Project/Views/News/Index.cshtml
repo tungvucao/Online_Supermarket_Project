@@ -10,10 +10,10 @@
         <div class="row">
             <div class="col-lg-12 text-center">
                 <div class="breadcrumb__text">
-                    <h2>Blog</h2>
+                    <h2>News</h2>
                     <div class="breadcrumb__option">
                         <a href="./index.html">Home</a>
-                        <span>Blog</span>
+                        <span>News</span>
                     </div>
                 </div>
             </div>
@@ -47,11 +47,11 @@
                                     <ul>
                                         <li><i class="fa fa-calendar-o"></i>@item.CreatedDate</li>
                                     </ul>
-                                    <h5><a href="#">@item.Title</a></h5>
+                                    <h5><a asp-action="ChiTietNews" asp-route-maNews="@item.NewId">@item.Title</a></h5>
                                     <p>
                                         @item.ShortContent
                                     </p>
-                                    <a href="#" class="blog__btn">READ MORE <span class="arrow_right"></span></a>
+                                    <a class="blog__btn" asp-action="ChiTietNews" asp-route-maNews="@item.NewId">READ MORE <span class="arrow_right"></span></a>
                                 </div>
                             </div>
                         </div>
