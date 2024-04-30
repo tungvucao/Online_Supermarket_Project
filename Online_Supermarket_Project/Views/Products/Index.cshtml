@@ -147,10 +147,16 @@
                                 <option value="@Url.Action("Index", "Products", new { page = ViewBag.CurrentPage, sort = 0 })">Default</option>
                                 <option value="@Url.Action("Index", "Products", new { page = ViewBag.CurrentPage, sort = 1 })">Gia Tang Dan</option>
                                 </select> *@
-                                <span>Sort By</span>
-                                <a class="dropdown-item" href="@Url.Action("Index", "Products", new { page = ViewBag.CurrentPage, sort = 0 })">Default</a>
-                                <a class="dropdown-item" href="@Url.Action("Index", "Products", new { page = ViewBag.CurrentPage, sort = 2 })">Giá giảm dần</a>
-                                <a class="dropdown-item" href="@Url.Action("Index", "Products", new { page = ViewBag.CurrentPage, sort = 1 })">Giá tăng dần</a>
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="sortDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Sort By
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="sortDropdown">
+                                        <a class="dropdown-item" href="@Url.Action("Index", "Products", new { page = ViewBag.CurrentPage, sort = 0 })">Default</a>
+                                        <a class="dropdown-item" href="@Url.Action("Index", "Products", new { page = ViewBag.CurrentPage, sort = 2 })">Giá giảm dần</a>
+                                        <a class="dropdown-item" href="@Url.Action("Index", "Products", new { page = ViewBag.CurrentPage, sort = 1 })">Giá tăng dần</a>
+                                    </div>
+                                </div>
 
 
 

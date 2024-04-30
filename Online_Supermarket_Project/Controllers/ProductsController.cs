@@ -77,5 +77,17 @@ namespace Online_Supermarket_Project.Controllers
             }
             return View(pr);
         }
+        public IActionResult ThemGioHang(int masp, int soluong)
+        {
+            OrderDetail detail = new OrderDetail();
+            detail.OrderId = 2;
+            detail.ProductId = masp;
+            detail.Quantity = soluong;
+            var product = _db.Product.AsNoTracking().Where(x => x.ProductId == masp).FirstOrDefault();
+            detail.Total = product.Price * soluong;
+            _db.Add(detail);
+            _db.SaveChanges();
+            return Json(new {success = true});
+        }
     }
 }

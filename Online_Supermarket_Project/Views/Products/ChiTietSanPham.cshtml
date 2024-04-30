@@ -52,11 +52,11 @@
                     <div class="product__details__quantity">
                         <div class="quantity">
                             <div class="pro-qty">
-                                <input type="text" value="1">
+                                <input id="soluong" type="text" value="1">
                             </div>
                         </div>
                     </div>
-                    <a href="#" class="primary-btn">ADD TO CARD</a>
+                    <button id ="addToCart" class ="primary-btn">ADD TO CARD</button>
                     <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
                     <ul>
                         <li><b>Availability</b> <span>In Stock</span></li>
@@ -77,4 +77,69 @@
         </div>
     </div>
 </section>
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var datas = {
+                // Dữ liệu bạn muốn gửi đi, ví dụ:
+                masp: @Model.ProductId,
+                soluong: inputValue
+            }
+            var inputValue = 1
+            $('.inc').click(function () {
+                // Lấy giá trị từ input có ID là 'soluong'
+                inputValue = $('#soluong').val();
+                datas = {
+                    // Dữ liệu bạn muốn gửi đi, ví dụ:
+                    masp: @Model.ProductId,
+                    soluong: inputValue
+                }
+                console.log('Giá trị của input sau khi tăng: ' + inputValue);
+            });
+            $('.dec').click(function () {
+                // Lấy giá trị từ input có ID là 'soluong'
+                inputValue = $('#soluong').val();
+                datas = {
+                    // Dữ liệu bạn muốn gửi đi, ví dụ:
+                    masp: @Model.ProductId,
+                    soluong: inputValue
+                }
+                console.log('Giá trị của input sau khi giam: ' + inputValue);
+            });
+            
+            
+            $('#addToCart').click(function () {
+                console.log(datas);
+                if (typeof inputValue === 'undefined'){
+                    datas = {
+                        // Dữ liệu bạn muốn gửi đi, ví dụ:
+                        masp: @Model.ProductId,
+                        soluong: 1
+                    }
+                }
+                else {
+                    datas = {
+                        // Dữ liệu bạn muốn gửi đi, ví dụ:
+                        masp: @Model.ProductId,
+                        soluong: inputValue + 1
+                    }
+                }
+                $.ajax({
+                    url: '@Url.Action("ThemGioHang", "Products")',
+                    type: 'POST',
+                    data: datas,
+                    success: function (response) {
+                        // TODO: Xử lý sau khi cập nhật thành công
+                        alert("Them vao thanh cong")
+                    },
+                    error: function (error) {
+                        // TODO: Xử lý lỗi
+                        alert("Them vao that bai")
+                        console.log(datas);
+                    }
+                });
+            });
+        });
+    </script>
+}
 <!-- Product Details Section End -->
