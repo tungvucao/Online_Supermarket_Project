@@ -1,0 +1,69 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+}
+@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<New>
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-section set-bg" data-setbg="/images/breadcrumb.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2>Blog</h2>
+                    <div class="breadcrumb__option">
+                        <a href="./index.html">Home</a>
+                        <span>Blog</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+<!-- Blog Section Begin -->
+<section class="blog spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-5">
+                <div class="blog__sidebar">
+                    <div class="blog__sidebar__item">
+                        <h4>Hot News</h4>
+                        @await Component.InvokeAsync("BaiBaoHot")
+                    </div>
+                </div>
+                
+            </div>
+            <div class="col-lg-8 col-md-7">
+                <div class="row">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="blog__item">
+                                <div class="blog__item__pic">
+                                    <img src="@Url.Content("/images/news/" + item.Thumb)" alt="" style="width: 360px; height: 258px; object-fit: cover;">
+                                </div>
+                                <div class="blog__item__text">
+                                    <ul>
+                                        <li><i class="fa fa-calendar-o"></i>@item.CreatedDate</li>
+                                    </ul>
+                                    <h5><a href="#">@item.Title</a></h5>
+                                    <p>
+                                        @item.ShortContent
+                                    </p>
+                                    <a href="#" class="blog__btn">READ MORE <span class="arrow_right"></span></a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <div class="col-lg-12">
+                        <div class="product__pagination blog__pagination">
+                            @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Blog Section End -->
