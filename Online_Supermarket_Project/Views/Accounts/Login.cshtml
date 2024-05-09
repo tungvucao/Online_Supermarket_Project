@@ -1,0 +1,54 @@
+﻿@model Online_Supermarket_Project.ModelView.LoginViewModel
+@{
+    ViewData["Title"] = "DangKy";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Breadcrumb Section Start -->
+<div class="breadcrumb" data-bg-image="/cusassets/images/bg/breadcrumb-bg-2.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <h1 class="breadcrumb_title">Login</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb Section End -->
+<!-- Order Tracking Section Start -->
+<div class="tracking">
+    <div class="tracking-col tracking-col-form">
+        <form class="tracking-form" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row row-cols-1 g-4">
+                <div class="col">
+                    <p class="tracking-form-text">
+                        <b><a href="/dang-ky.html">Đăng ký </a></b> nếu bạn chưa có tài khoản!
+                    </p>
+                    <p class="tracking-form-text">
+                        <b style="color: rgb(98, 157, 116);"></b>
+                    </p>
+                </div>
+                <div class="col">
+                    <label>Username</label>
+                    <input class="form-field" type="text" name="username">
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <label>Password</label>
+                    <input class="form-field" type="password" name="password">
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="col text-center mt-10">
+                    <button type="submit" class="btn btn-dark btn-hover-primary">Đăng nhập</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="tracking-col d-none d-md-block">
+        <div class="tracking-bg" data-bg-image="/cusassets/images/bg/order-tracking.jpg"></div>
+    </div>
+</div>
+<!-- Order Tracking Section End -->

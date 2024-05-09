@@ -44,10 +44,10 @@ namespace Online_Supermarket_Project.Areas.Admin.Controllers
         public IActionResult FindCategory(string keyword)
         {
             List<Category> ls = new List<Category>();
-            if (string.IsNullOrEmpty(keyword) || keyword.Length == 0)
+            if (string.IsNullOrEmpty(keyword))
             {
                 ls = _context.Category.AsNoTracking().ToList();
-                return PartialView("ListCategoriesSearchPartial", null);
+                return PartialView("ListCategoriesSearchPartial", ls);
             }
             else
             {

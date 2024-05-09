@@ -14,6 +14,7 @@ namespace Online_Supermarket_Project.Models
         public int ProductId { get; set; }
 
         public int? OrderNumber { get; set; }
+        public DateTime? CreatedDate { get; set; }
 
         public int? Quantity { get; set; }
 
@@ -24,5 +25,7 @@ namespace Online_Supermarket_Project.Models
         public DateTime? ShipDate { get; set; }
         [ForeignKey("OrderId")]
         public virtual Order? Order { get; set; }
+        [ForeignKey("ProductId")]
+        public virtual Product? Product { get; set; }
     }
 }

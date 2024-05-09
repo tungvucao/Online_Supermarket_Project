@@ -68,7 +68,7 @@
                                         <p>@item.Phone</p>
                                     </td>
                                     <td>@item.Address</td>
-                                    <td>@item.Location.Name</td>
+                                    <td>@item.Location?.Name</td>
                                     <td>
                                         <a asp-area="Admin" asp-controller="AdminCustomers" asp-action="Details" asp-route-id="@item.CusId" class="btn btn-success">Chi Tiết</a> |
                                         <a asp-area="Admin" asp-controller="AdminCustomers" asp-action="Edit" asp-route-id="@item.CusId" class="btn btn-primary">Sửa</a> |

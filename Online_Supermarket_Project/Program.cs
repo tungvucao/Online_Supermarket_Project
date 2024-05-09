@@ -1,4 +1,5 @@
 ﻿using AspNetCoreHero.ToastNotification;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Online_Supermarket_Project.AppContext;
 using System.Configuration;
@@ -18,6 +19,12 @@ builder.Services.AddDbContext<MyAppDbContext>(
 builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<HtmlEncoder>(HtmlEncoder.Create(allowedRanges: new[] { UnicodeRanges.All }));
 builder.Services.AddSession();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(x =>
+    {
+        x.LoginPath = "/dang-nhap.html";
+        x.AccessDeniedPath = "/";
+    });
 builder.Services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.TopRight; });
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 var app = builder.Build();

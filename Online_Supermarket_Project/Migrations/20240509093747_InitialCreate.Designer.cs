@@ -12,8 +12,8 @@ using Online_Supermarket_Project.AppContext;
 namespace Online_Supermarket_Project.Migrations
 {
     [DbContext(typeof(MyAppDbContext))]
-    [Migration("20240424094045_v1")]
-    partial class v1
+    [Migration("20240509093747_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -290,6 +290,7 @@ namespace Online_Supermarket_Project.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("Views")
@@ -307,6 +308,10 @@ namespace Online_Supermarket_Project.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("CusId")
                         .HasColumnType("int");
@@ -332,6 +337,9 @@ namespace Online_Supermarket_Project.Migrations
                     b.Property<DateTime?>("ShipDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("TotalMonney")
+                        .HasColumnType("int");
+
                     b.Property<int?>("TransactStatusId")
                         .HasColumnType("int");
 
@@ -351,6 +359,9 @@ namespace Online_Supermarket_Project.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderDetailId"));
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("Discount")
                         .HasColumnType("int");
@@ -376,6 +387,8 @@ namespace Online_Supermarket_Project.Migrations
                     b.HasKey("OrderDetailId");
 
                     b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("OrderDetail");
                 });
@@ -453,7 +466,7 @@ namespace Online_Supermarket_Project.Migrations
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Price")
+                    b.Property<int?>("Price")
                         .HasColumnType("int");
 
                     b.Property<string>("ProductName")
@@ -609,7 +622,15 @@ namespace Online_Supermarket_Project.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Online_Supermarket_Project.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Order");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Online_Supermarket_Project.Models.Product", b =>

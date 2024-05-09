@@ -1,0 +1,56 @@
+﻿@model List<Product>
+@if (Model != null || Model?.Count > 0)
+{
+    @foreach (var item in Model)
+    {
+        var url = $"{item.Alias}-{item.ProductId}.html";
+        <div class="col mb-50">
+            <!-- Product Item Start -->
+            <div class="product-item text-center">
+                @if (item.Discount != 0)
+                {
+                    <div class="product-item__badge">Giảm Giá</div>
+                }
+                <div class="product-item__image border w-100">
+                    <a href="@url"><img style="width:350px;height:300px" src="~/images/products/@item.Image" alt="@item.Alias"></a>
+                    <ul class="product-item__meta">
+                        <li class="product-item__meta-action">
+                            <a class="shadow-1 labtn-icon-quickview" href="#/" data-bs-tooltip="tooltip" data-bs-placement="top" title="Quick View" data-bs-toggle="modal" data-bs-target="#exampleProductModal"></a>
+                        </li>
+                        <li class="product-item__meta-action">
+                            <a class="shadow-1 labtn-icon-cart" href="#/" data-bs-tooltip="tooltip" data-bs-placement="top" title="Add to Cart" data-bs-toggle="modal" data-bs-target="#modalCart"></a>
+                        </li>
+                        <li class="product-item__meta-action">
+                            <a class="shadow-1 labtn-icon-wishlist" href="#/" data-bs-tooltip="tooltip" data-bs-placement="top" title="Add to wishlist" data-bs-toggle="modal" data-bs-target="#modalWishlist"></a>
+                        </li>
+                        <li class="product-item__meta-action">
+                            <a class="shadow-1 labtn-icon-compare" href="#/" data-bs-tooltip="tooltip" data-bs-placement="top" title="Add to compare" data-bs-toggle="modal" data-bs-target="#modalCompare"></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="product-item__content pt-5">
+                    <h5 class="product-item__title"><a href="@url">@item.ProductName</a></h5>
+
+                    @if (item.Discount != 0)
+                    {
+                        <i>
+                            <strike class="product-item__price">@item.Price.GetValueOrDefault().ToString("#,##0") VNĐ</strike>
+                        </i>
+                        <span class="product-item__price">@item.Discount.GetValueOrDefault().ToString("#,##0") VNĐ</span>
+                    }
+                    else
+                    {
+                        <span class="product-item__price">@item.Price.GetValueOrDefault().ToString("#,##0") VNĐ</span>
+                    }
+                </div>
+            </div>
+            <!-- Product Item End -->
+        </div>
+    }
+}
+else
+{
+    <h3>
+        <b>Data not found</b>
+    </h3>
+}

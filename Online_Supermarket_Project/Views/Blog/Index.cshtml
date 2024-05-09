@@ -1,0 +1,80 @@
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<Online_Supermarket_Project.Models.New>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int pageCurrent = ViewBag.CurrentPage;
+    int nextPage = pageCurrent + 1;
+}
+
+<!-- Breadcrumb Section Start -->
+<div class="breadcrumb" data-bg-image="/cusassets/images/bg/breadcrumb-bg-5.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <h1 class="breadcrumb_title">Blog</h1>
+                    <ul class="breadcrumb_list">
+                        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li>Blog</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb Section End -->
+<!-- Product Section Start -->
+<div class="blog-sidebar blog-sidebar-right">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 section-padding-04">
+
+                <div class="row row-cols-sm-2 row-cols-md-2 row-cols-lg-3 gx-lg-5 gx-xxl-12">
+                    @if (Model != null && Model.Count > 0)
+                    {
+                        @foreach (var item in Model)
+                        {
+                            var url = $"/tin-tuc/{item.Alias}-{item.NewId}.html";
+                            <div class="cols">
+                                <div class="blog-post-two">
+                                    <a href="@url" class="blog-post-two_thumb">
+                                        <img src="~/images/news/@item.Thumb" style="width:440px;height:300px" alt="Blog-Image">
+                                    </a>
+                                    <div class="blog-post-two__content">
+                                        <ul class="blog-post-two__meta">
+                                            <li><a href="@url">@item.ShortContent</a></li>
+                                            <li>-</li>
+                                            <li><span>@item.CreatedDate</span></li>
+                                        </ul>
+                                        <h3 class="blog-post-two__title"><a href="@url">@item.Title</a></h3>
+                                        <a href="@url" class="blog-post-two__btn">Read More <span class=""><svg xmlns="http://www.w3.org/2000/svg" width="22" height="16" fill="none" viewBox="0 0 44 16"><path fill="currentColor" d="M43.707 8.707a1 1 0 0 0 0-1.414L37.343.929a1 1 0 1 0-1.414 1.414L41.586 8l-5.657 5.657a1 1 0 0 0 1.414 1.414l6.364-6.364zM0 9h43V7H0v2z"></path></svg></span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+
+                </div>
+
+                <div class="shop-bottombar mt-0">
+                    <ul class="pagination">
+                        @if (pageCurrent > 1)
+                        {
+                            <li class="disabled"><a href="/blog.html?page=@(pageCurrent-1)">←</a></li>
+                            <li><a href="/blog.html?page=@pageCurrent-1">@(pageCurrent - 1)</a></li>
+                        }
+                        <li style="color:burlywood"><a class="active" href="/blog.html?page=@pageCurrent">@pageCurrent</a></li>
+                        @if (pageCurrent < ViewBag.totalPage)
+                        {
+                            <li><a href="/blog.html?page=@nextPage">@nextPage</a></li>
+                            <li><a href="/blog.html?page=@nextPage">→</a></li>
+                        }
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Product Section End -->

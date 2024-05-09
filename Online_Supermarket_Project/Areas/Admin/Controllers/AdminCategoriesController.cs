@@ -116,6 +116,8 @@ namespace Online_Supermarket_Project.Areas.Admin.Controllers
             {
                 try
                 {
+                    category.CateName = Utilities.ToTitleCase(category.CateName);
+                    category.Alias = Utilities.ToUrlFriendly(category.CateName);
                     category.Desciption = formValues["editor"];
                     _context.Update(category);
                     _notyfService.Success("Update Successfully!");

@@ -1,0 +1,67 @@
+﻿@model Online_Supermarket_Project.ModelView.Register
+
+@{
+    ViewData["Title"] = "DangKy";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- Breadcrumb Section Start -->
+<div class="breadcrumb" data-bg-image="/cusassets/images/bg/breadcrumb-bg-2.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <h1 class="breadcrumb_title">Đăng Ký</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb Section End -->
+<!-- Order Tracking Section Start -->
+<div class="tracking">
+    <div class="tracking-col tracking-col-form">
+        <form class="tracking-form" method="post" asp-action="DangKy">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row row-cols-1 g-4">
+                <div class="col">
+                    <p class="tracking-form-text">
+                        <h3>Đăng Ký.</h3> <br />
+                        Nếu đã có tài khoản? <b><a href="dang-nhap.html">Đăng Nhập</a></b>
+                    </p>
+                </div>
+                <div class="col-md-12">
+                    <label>Full Name</label>
+                    <input class="form-field" type="text" asp-for="FullName" placeholder="Full Name" />
+                    <span asp-validation-for="FullName" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label>Email</label>
+                    <input class="form-field" type="text" asp-for="Email" placeholder="Email for login" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label>Phone</label>
+                    <input class="form-field" type="tel" asp-for="Phone" placeholder="Phone" />
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label>Password</label>
+                    <input class="form-field" type="password" asp-for="Password" placeholder="Password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label>ConfirmPassword</label>
+                    <input class="form-field" type="password" asp-for="ConfirmPassword" placeholder="ConfirmPassword" />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+                <div class="col text-center mt-10">
+                    <button type="submit" class="btn btn-dark btn-hover-primary">Đăng ký</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="tracking-col d-none d-md-block">
+        <div class="tracking-bg" data-bg-image="/cusassets/images/bg/order-tracking.jpg"></div>
+    </div>
+</div>
+<!-- Order Tracking Section End -->

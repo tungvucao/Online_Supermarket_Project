@@ -168,7 +168,7 @@ namespace Online_Supermarket_Project.Areas.Admin.Controllers
             }
 
             await _context.SaveChangesAsync();
-            _notyfService.Success($"Delete Success Account: {account.FullName}!");
+            _notyfService.Success($"Delete Success Account: {account?.FullName}!");
             return RedirectToAction(nameof(Index));
         }
 

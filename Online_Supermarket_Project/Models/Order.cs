@@ -20,10 +20,12 @@ namespace Online_Supermarket_Project.Models
         public bool? Deleted { get; set; }
 
         public bool? Paid { get; set; }
+        public int? TotalMonney { get; set; }
 
         public DateTime? PaymentDate { get; set; }
 
         public int? PaymentId { get; set; }
+        public string Address { get; set; } = "";
 
         public string? Note { get; set; }
         [ForeignKey("CusId")]

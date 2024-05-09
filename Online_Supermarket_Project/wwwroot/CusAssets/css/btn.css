@@ -1,0 +1,30 @@
+.cart-plus-minuss {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+    font-size: 14px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    width: 100px;
+}
+
+    .cart-plus-minuss .cart-plus-minus-boxx {
+        min-height: 56px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    .cart-plus-minuss .qtybutton {
+        width: 30px;
+        height: 30px;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+    }
+
+    .cart-plus-minuss .qty {
+        width: 40px;
+        text-align: center;
+        border: none;
+    }

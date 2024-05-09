@@ -1,0 +1,204 @@
+﻿@model Online_Supermarket_Project.Models.Customer
+
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<Order> lsOrder = ViewBag.listOrder;
+    Online_Supermarket_Project.ModelView.ChangePasswordVM changePassword = new Online_Supermarket_Project.ModelView.ChangePasswordVM();
+}
+<!-- Breadcrumb Section Start -->
+<div class="breadcrumb" data-bg-image="/cusassets/images/bg/breadcrumb-bg.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <h1 class="breadcrumb_title">My Account</h1>
+                    <ul class="breadcrumb_list">
+                        <li><a href="/">Home</a></li>
+                        <li>Xin Chào @Model.FullName</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb Section End -->
+<!-- My Account Section Start -->
+<div class="section section-padding-03">
+    <div class="container custom-container">
+        <div class="row g-lg-10 g-6">
+            <!-- My Account Tab List Start -->
+            <div class="col-lg-4 col-12">
+                <ul class="my-account-tab-list nav">
+                    <li>
+                        <a href="#dashboad" class="active" data-bs-toggle="tab"><i class="lastudioicon-home-2"></i> Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="#orders" data-bs-toggle="tab"><i class="dlicon files_notebook"></i> Orders</a>
+                    </li>
+                    <li>
+                        <a href="#account-info" data-bs-toggle="tab"><i class="dlicon users_single-01"></i>Password change</a>
+                    </li>
+                    <li>
+                        <a href="/dang-xuat.html"><i class="dlicon arrows-1_log-out"></i> Logout</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- My Account Tab List End -->
+            <!-- My Account Tab Content Start -->
+            <div class="col-lg-8 col-12">
+                <div class="tab-content">
+                    <!-- Single Tab Content Start -->
+                    <div class="tab-pane fade show active" id="dashboad">
+                        <div class="myaccount-content dashboad">
+                            <div class="alert alert-light">
+                                Hello <b>@Model.FullName</b>
+                                <a href="dang-xuat.html">Log out</a>)
+                            </div>
+                            <p>Email: @Model.Email</p>
+                            <p>Phone: @Model.Phone</p>
+                        </div>
+                    </div>
+                    <!-- Single Tab Content End -->
+                    <!-- Single Tab Content Start -->
+                    <div class="tab-pane fade" id="orders">
+                        <div class="myaccount-content order">
+                            <div class="table-responsive">
+                                @if (lsOrder != null && lsOrder.Count > 0)
+                                {
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>OrderId</th>
+                                                <th>Date Order</th>
+                                                <th>Total</th>
+                                                <th>Status</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in lsOrder)
+                                            {
+                                                <tr>
+                                                    <td>@item.OrderId</td>
+                                                    <td>@item.OrderDate</td>
+                                                    <td>@item.TotalMonney</td>
+                                                    <td>@item.TransactStatus?.Status</td>
+                                                    <td>
+                                                        <a class="xemDonHang" data-madonhang="@item.OrderId" href="#"><b>Detail</b></a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <div id="records_table">
+
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>OrderId</th>
+                                                    <th>Date Order</th>
+                                                    <th>Date Ship</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                <tr>
+                                                    <td><h3>Chưa có đơn hàng!</h3></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Single Tab Content End -->
+                    <!-- Single Tab Content Start -->
+                    <div class="tab-pane fade" id="address">
+                        <div class="myaccount-content address">
+                            <div class="alert alert-light">
+                                The following addresses will be used on the checkout page by
+                                default.
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-12">
+                                    <h4 class="title">
+                                        Billing Address <a href="#" class="edit-link">edit</a>
+                                    </h4>
+                                    <address>
+                                        <p class="name"><strong>Alex Tuntuni</strong></p>
+                                        <p class="mb-3">
+                                            1355 Market St, Suite 900 <br />
+                                            San Francisco, CA 94103
+                                        </p>
+                                        <p>Mobile: (123) 456-7890</p>
+                                    </address>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <h4 class="title">
+                                        Shipping Address <a href="#" class="edit-link">edit</a>
+                                    </h4>
+                                    <address>
+                                        <p class="name"><strong>Alex Tuntuni</strong></p>
+                                        <p class="mb-3">
+                                            1355 Market St, Suite 900 <br />
+                                            San Francisco, CA 94103
+                                        </p>
+                                        <p>Mobile: (123) 456-7890</p>
+                                    </address>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Single Tab Content End -->
+                    <!-- Single Tab Content Start -->
+                    <div class="tab-pane fade" id="account-info">
+                        <div class="myaccount-content account-details">
+                            @await Html.PartialAsync("_PasswordChangePV", changePassword)
+                        </div>
+                    </div>
+                    <!-- Single Tab Content End -->
+                </div>
+            </div>
+            <!-- My Account Tab Content End -->
+        </div>
+    </div>
+</div>
+<!-- My Account Section End -->
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $(".xemDonHang").click(function () {
+                var madonhang = $(this).attr("data-madonhang");
+                $.ajax({
+                    url: '/DonHang/Details',
+                    datatype: "json",
+                    type: "GET",
+                    data: {
+                        id: madonhang
+                    },
+                    async: true,
+                    success: function (results) {
+                        $("#records_table").html("");
+                        $("#records_table").html(results);
+                    },
+                    error: function (xhr) {
+                        alert('Error');
+                    }
+                });
+            });
+        });
+    </script>
+}

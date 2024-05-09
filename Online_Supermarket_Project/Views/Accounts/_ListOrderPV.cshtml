@@ -1,0 +1,56 @@
+﻿@model List<Order>
+
+<legend>List Order</legend>
+@if (Model != null && Model.Count > 0)
+{
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>OrderId</th>
+                    <th>Date Order</th>
+                    <th>Date Ship</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.OrderId</td>
+                        <td>@item.OrderDate</td>
+                        <td>@item.ShipDate</td>
+                        <td>@item.TransactStatus?.Status</td> 
+                        <td>
+                            <a href="shopping-car.html"><b>View</b></a>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>OrderId</th>
+                    <th>Date Order</th>
+                    <th>Date Ship</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                    <tr>
+                        <td><h3>Chưa có đơn hàng!</h3></td>
+                    </tr>
+            </tbody>
+        </table>
+    </div>
+    
+}

@@ -56,10 +56,15 @@
                             <span asp-validation-for="UnitsInStock" class="text-danger"></span>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label>Image</label>
-                        <input name="fImage" type="file" class="form-control" asp-for="Image" placeholder="Stock">
-                        <span asp-validation-for="Image" class="text-danger"></span>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label>Image</label>
+                            <input name="fImage" type="file" class="form-control" asp-for="Image" placeholder="Stock">
+                            <span asp-validation-for="Image" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Public<input style="font-size:20px;margin-top:30px" type="checkbox" asp-for="Status"></label><br />
+                        </div>
                     </div>
                     <div class="form-group">
                         <label>Short Description</label>

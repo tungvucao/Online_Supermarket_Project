@@ -1,0 +1,34 @@
+﻿@model List<Category>
+
+
+@if (Model != null)
+{
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.CateId</td>
+            <td>@item.CateName</td>
+            <td>
+                @if (item.Status)
+                {
+                    <span class="label label-success">Active</span>
+                }
+                else
+                {
+                    <span class="label label-success">Inactive</span>
+                }
+            </td>
+            <td>
+                <a asp-area="Admin" asp-controller="AdminCategories" asp-action="Details" asp-route-id="@item.CateId" class="btn btn-success">Chi Tiết</a> |
+                <a asp-area="Admin" asp-controller="AdminCategories" asp-action="Edit" asp-route-id="@item.CateId" class="btn btn-primary">Sửa</a> |
+                <a asp-area="Admin" asp-controller="AdminCategories" asp-action="Delete" asp-route-id="@item.CateId" class="btn btn-danger">Xóa</a>
+            </td>
+        </tr>
+    }
+}
+else
+{
+    <tr>
+        <td><h3>Không có bản ghi nào</h3></td>
+    </tr>
+}

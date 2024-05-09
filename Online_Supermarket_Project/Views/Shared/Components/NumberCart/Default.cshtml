@@ -1,0 +1,19 @@
+﻿@model List<Online_Supermarket_Project.ModelView.CartItem>
+@if (Model != null && Model.Count() > 0)
+{
+    <li>
+        <button class="action" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart">
+            <i class="lastudioicon-shopping-cart-2"></i>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">@Model.Count()</span>
+        </button>
+    </li>
+}
+else
+{
+    <li>
+        <button class="action" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart">
+            <i class="lastudioicon-shopping-cart-2"></i>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">0</span>
+        </button>
+    </li>
+}

@@ -1,0 +1,291 @@
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<Online_Supermarket_Project.Models.Product>
+@{
+    ViewData["Title"] = "Shop";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    Category cate = ViewBag.CurrentCate;
+    List<Category> listCate = ViewBag.listCate;
+    int pageCurrent = ViewBag.CurrentPage;
+    int nextPage = pageCurrent + 1;
+}
+
+<!-- Breadcrumb Section Start -->
+<div class="breadcrumb" data-bg-image="/cusassets/images/bg/breadcrumb-bg.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <h1 class="breadcrumb_title">@cate.CateName</h1>
+                    <ul class="breadcrumb_list">
+                        <li><a id="cateId" data-value="@cate.CateId" href="/">Home</a></li>
+                        <li>@cate.CateName</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb Section End -->
+<!-- Product Section Start -->
+<div class="shop-product-section sidebar-left overflow-hidden">
+    <div class="container">
+        <div class="row flex-md-row-reverse">
+            <div class="col-md-8 section-padding-04">
+                <!-- Shop Top Bar Start -->
+                <div class="shop-topbar">
+                    <div class="shop-topbar-right" style="border:1px solid black; border-radius:5px">
+                        <div class="shop-topbar-item">
+                            <select name="sortBy" id="sortBy">
+                                <option selected value="">Sort</option>
+                                <option value="namedesc">Sort by Name ↑</option>
+                                <option value="nameasc">Sort by Name ↓</option>
+                                <option value="pricedesc">Price ↑</option>
+                                <option value="priceasc">Price ↓</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Shop Top Bar End -->
+                <!-- Product Section Start -->
+                <div class="row row-cols-xl-3 row-cols-lg-2 row-cols-sm-2 row-cols-1 mb-n50" id="records_table">
+                    @if (Model != null || Model?.Count > 0)
+                    {
+                        @foreach (var item in Model)
+                        {
+                            var url = $"{item.Alias}-{item.ProductId}.html";
+                            <div class="col mb-50">
+                                <!-- Product Item Start -->
+                                <div class="product-item text-center">
+                                    @if (item.Discount > 0)
+                                    {
+                                        <div class="product-item__badge">Giảm Giá</div>
+                                    }
+                                    <div class="product-item__image border w-100">
+                                        <a href="@url"><img style="width:350px;height:300px" src="~/images/products/@item.Image" alt="@item.Alias"></a>
+                                        <ul class="product-item__meta">
+                                            <li class="product-item__meta-action">
+                                                <a class="shadow-1 labtn-icon-quickview" href="#/" data-bs-tooltip="tooltip" data-bs-placement="top" title="Quick View" data-bs-toggle="modal" data-bs-target="#exampleProductModal"></a>
+                                            </li>
+                                            <li class="product-item__meta-action">
+                                                <a class="shadow-1 labtn-icon-cart add-to-cart" href="#/" data-id="@item.ProductId" data-bs-tooltip="tooltip" data-bs-placement="top" title="Add to Cart" data-bs-toggle="modal" data-bs-target="#modalCart"></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="product-item__content pt-5">
+                                        <h5 class="product-item__title"><a href="@url">@item.ProductName</a></h5>
+
+                                        @if (item.Discount > 0)
+                                        {
+                                            <i>
+                                                <strike class="product-item__price">@item.Price.GetValueOrDefault().ToString("#,##0") VNĐ</strike>
+                                            </i>
+                                            <span class="product-item__price">@item.Discount.GetValueOrDefault().ToString("#,##0") VNĐ</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="product-item__price">@item.Price.GetValueOrDefault().ToString("#,##0") VNĐ</span>
+                                        }
+                                    </div>
+                                </div>
+                                <!-- Product Item End -->
+                            </div>
+                        }
+                    }
+                </div>
+                <!-- Product Section End -->
+                <!-- Shop bottom Bar Start -->
+                <div class="shop-bottombar">
+                    <ul class="pagination">
+                        @if (pageCurrent > 1)
+                        {
+                            <li class="disabled"><a href="/@cate.Alias?page=@(pageCurrent-1)">←</a></li>
+                            <li><a href="/@cate.Alias?page=@pageCurrent-1">@(pageCurrent - 1)</a></li>
+                        }
+                        <li style="color:burlywood"><a class="active" href="/@cate.Alias?page=@pageCurrent">@pageCurrent</a></li>
+                        @if (pageCurrent < ViewBag.totalPage)
+                        {
+                            <li><a href="/@cate.Alias?page=@nextPage">@nextPage</a></li>
+                            <li><a href="/@cate.Alias?page=@nextPage">→</a></li>
+                        }
+                    </ul>
+                </div>
+                <!-- Shop bottom Bar End -->
+            </div>
+            <div class="col-md-4">
+                <div class="sidebars">
+                    <div class="sidebars_inner">
+                        <!-- Search Widget Start -->
+                        <form action="#" class="sidebars_search">
+                            <input type="text" name="keyword" id="keyword" placeholder="Search Here" class="sidebars_search__input">
+                        </form>
+                        <!-- Search Widget End -->
+                        <!-- Category Widget Start -->
+                        <div class="sidebars_widget">
+                            <h3 class="sidebars_widget__title">Category</h3>
+                            <ul class="sidebars_widget__category">
+                                @if (listCate != null)
+                                {
+                                    @foreach (var i in listCate)
+                                    {
+                                        var urlcate = $"{i.Alias}";
+                                        <li><a href="@urlcate">@i.CateName</a></li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                        <!-- Category Widget End -->
+                        <!-- Price Filter Widget Start -->
+                        <!-- Price Filter Widget End -->
+                        <!-- Popular Product Widget Start -->
+                        <div class="sidebars_widget">
+                            <h3 class="sidebars_widget__title">Popular products</h3>
+                            <ul class="sidebars_widget__product">
+                                <!-- Single Product Start -->
+                                <li class="single-product">
+                                    <a href="single-product.html" class="single-product_thumb">
+                                        <img src="~/cusassets/images/product/sidebar-1.png" alt="Sidebar-Image">
+                                    </a>
+                                    <div class="single-product_content">
+                                        <a href="single-product.html" class="single-product_content__title">Brownie</a>
+                                        <span class="single-product_content__price">$4.99</span>
+                                    </div>
+                                </li>
+                                <!-- Single Product End -->
+                                <!-- Single Product Start -->
+                                <li class="single-product">
+                                    <a href="single-product.html" class="single-product_thumb">
+                                        <img src="~/cusassets/images/product/sidebar-2.png" alt="Sidebar-Image">
+                                    </a>
+                                    <div class="single-product_content">
+                                        <a href="single-product.html" class="single-product_content__title">Red Velvet</a>
+                                        <span class="single-product_content__price">$4.99</span>
+                                    </div>
+                                </li>
+                                <!-- Single Product End -->
+                                <!-- Single Product Start -->
+                                <li class="single-product">
+                                    <a href="single-product.html" class="single-product_thumb">
+                                        <img src="~/cusassets/images/product/sidebar-3.png" alt="Sidebar-Image">
+                                    </a>
+                                    <div class="single-product_content">
+                                        <a href="single-product.html" class="single-product_content__title">Cream Muffin</a>
+                                        <span class="single-product_content__price">$4.99</span>
+                                    </div>
+                                </li>
+                                <!-- Single Product End -->
+                            </ul>
+                        </div>
+                        <!-- Popular Product Widget End -->
+                        <!-- Instagram Widget Start -->
+                        <div class="sidebars_widget">
+                            <h3 class="sidebars_widget__title">Instagram</h3>
+                            <ul class="sidebars_widget__instagram">
+                                <li>
+                                    <a class="instagram-thumb" href="#">
+                                        <img src="~/cusassets/images/instagram/widget-insta-1.jpg" alt="Image">
+                                        <i class="lastudioicon lastudioicon-b-instagram"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="instagram-thumb" href="#">
+                                        <img src="~/cusassets/images/instagram/widget-insta-2.jpg" alt="Image">
+                                        <i class="lastudioicon lastudioicon-b-instagram"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="instagram-thumb" href="#">
+                                        <img src="~/cusassets/images/instagram/widget-insta-3.jpg" alt="Image">
+                                        <i class="lastudioicon lastudioicon-b-instagram"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="instagram-thumb" href="#">
+                                        <img src="~/cusassets/images/instagram/widget-insta-4.jpg" alt="Image">
+                                        <i class="lastudioicon lastudioicon-b-instagram"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- Instagram Widget End -->
+                        <!-- Tags Widget Start -->
+                        <div class="sidebars_widget">
+                            <h3 class="sidebars_widget__title">Tags</h3>
+                            <ul class="sidebars_widget__tags">
+                                <li><a href="shop.html">Cake, </a></li>
+                                <li><a href="shop.html">Cupcake, </a></li>
+                                <li><a href="shop.html">Donut, </a></li>
+                                <li><a href="shop.html">Muffin, </a></li>
+                                <li><a href="shop.html">New, </a></li>
+                                <li><a href="shop.html">Waffle</a></li>
+                            </ul>
+                        </div>
+                        <!-- Tags Widget End -->
+                        <!-- Banner Widget Start -->
+                        <div class="sidebars_widget">
+                            <a href="shop.html" class="sidebars_widget__banner">
+                                <img src="~/cusassets/images/banner/sidebarbanner.jpg" alt="banner-Image">
+
+                                <div class="banner-content">
+                                    <span class="banner-content_title">Check it now</span>
+                                </div>
+                            </a>
+                        </div>
+                        <!-- Banner Widget End -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Product Section End -->
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            jQuery("#sortBy").change(function () {
+                var selectedValue = $("#sortBy").val();
+                $.ajax({
+                    url: '/Product/Filter/',
+                    datatype: "json",
+                    type: "GET",
+                    data: {
+                        SelectedValue: selectedValue
+                    },
+                    async: true,
+                    success: function (results) {
+                        if (results.status == "success") {
+                            window.location.href = results.redirectUrl;
+                        }
+                    },
+                    error: function (xhr) {
+                        alert('Error');
+                    }
+                });
+            });
+
+            $("#keyword").keyup(function () {
+                var strKeyword = $('#keyword').val();
+                var cateId = document.getElementById("cateId").getAttribute("data-value");
+                cateId = parseFloat(cateId);
+                $.ajax({
+                    url: '/CusSearch/FindProductByCate/',
+                    datatype: "json",
+                    type: "POST",
+                    data: {
+                        keyword: strKeyword,
+                        cateId: cateId
+                    },
+                    async: true,
+                    success: function (results) {
+                        $("#records_table").html("");
+                        $("#records_table").html(results);
+                    },
+                    error: function (xhr) {
+                        alert('Có Lỗi Gì Rồi');
+                    }
+                })
+            })
+        });
+    </script>
+}

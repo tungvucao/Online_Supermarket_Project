@@ -1,0 +1,188 @@
+﻿@model List<Online_Supermarket_Project.ModelView.CartItem>
+
+<!-- Breadcrumb Section Start -->
+<div class="breadcrumb" data-bg-image="/cusassets/images/bg/breadcrumb-bg.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <h1 class="breadcrumb_title">Cart</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb Section End -->
+<!-- Shop Cart Section Start -->
+<div class="section section-padding-03">
+    <div class="container custom-container">
+        <div class="row mb-n30">
+            <div class="col-lg-8 col-12 mb-30">
+                <!-- Cart Table For Tablet & Up Devices Start -->
+                <div class="table-responsive">
+                    <table class="cart-table table text-center align-middle mb-6 d-none d-md-table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th class="title text-start">Product</th>
+                                <th class="price">Price</th>
+                                <th class="price">Discount</th>
+                                <th class="quantity">Quantity</th>
+                                <th class="total">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody class="border-top-0">
+                            @if (Model != null && Model.Count() > 0)
+                            {
+                                @foreach (var item in Model)
+                                {
+                                    var url = $"{item.Product.Alias}-{item.Product.ProductId}.html";
+                                    <tr>
+                                        <th class="cart-remove">
+                                            <button class="remove-btn"><i class="lastudioicon lastudioicon-e-remove"></i></button>
+                                        </th>
+                                        <th class="cart-thumb">
+                                            <a href="@url">
+                                                <img src="/images/products/@item.Product.Image" alt="@item.Product.Title">
+                                            </a>
+                                        </th>
+                                        <th class="text-start">
+                                            <a href="@url">@item.Product.ProductName</a>
+                                        </th>
+                                        <td>
+                                            @item.Product.Price.GetValueOrDefault().ToString("#,##0") VNĐ
+                                        </td>
+                                        <td>
+                                            @item.Product.Discount.GetValueOrDefault().ToString("#,##0") VNĐ
+                                        </td>
+                                        <td class="text-center cart-quantity">
+                                            <!-- Quantity Start -->
+                                            <div class="quantity">
+                                                <!-- <div class="cart-plus-minus border-0 mx-auto"></div> -->
+                                                <div style="display: flex">
+                                                    <input data-mahh="@item.Product.ProductId" data-dongia="@item.Product.Price" style="width: 50px; text-align: center" 
+                                                            class="cartItemt" min="1" class="ipt" type="number" value="@item.Amount" />
+                                                </div>
+                                            </div>
+                                            <!-- Quantity End -->
+                                        </td>
+                                        <td>@item.TotalAmount</td>
+                                    </tr>
+
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Cart Table For Tablet & Up Devices End -->
+                <!-- Cart Action Buttons Start -->
+                <div class="row justify-content-between gap-3">
+                    <div class="col-auto">
+                        <a class="btn btn-outline-dark btn-primary-hover rounded-0">Continue Shopping</a>
+                    </div>
+                    <div class="col-auto d-flex flex-wrap gap-3">
+                        <a class="btn btn-outline-dark btn-primary-hover rounded-0">
+                            Update Cart
+                        </a>
+                        <a class="btn btn-outline-dark btn-primary-hover rounded-0">Clear All Cart</a>
+                    </div>
+                </div>
+                <!-- Cart Action Buttons End -->
+            </div>
+
+            <!-- Cart Totals Start -->
+            <div class="col-lg-4 col-12 mb-30">
+                <div class="cart-totals">
+                    <div class="cart-totals-inner">
+                        <h4 class="title">Cart totals</h4>
+                        <table class="table bg-transparent">
+                            <tbody>
+                                <tr class="subtotal">
+                                    <th class="sub-title">Price</th>
+                                    <td class="amount"><span>@Model.Sum(p => p.TotalPriceAmount).ToString("#,##0") VNĐ</span></td>
+                                </tr>
+                                <tr class="subtotal">
+                                    <th class="sub-title">Discount</th>
+                                    <td class="amount"><span>@Model.Sum(p => p.TotalDiscountAmount).ToString("#,##0") VNĐ</span></td>
+                                </tr>
+                                <tr class="total">
+                                    <th class="sub-title">Total</th>
+                                    <td class="amount"><strong>@Model.Sum(p => p.TotalAmount).ToString("#,##0") VNĐ</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <h3 class="title" style="text-align: center; color: indianred;">
+                            <span></span>
+                        </h3>
+                    </div>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a href="/checkout.html" class="btn btn-dark btn-hover-primary rounded-0 w-100">Proceed to checkout</a>
+                    }
+                    else
+                    {
+                        <a href="/dang-nhap.html?returnUrl=/checkout.html" class="btn btn-dark btn-hover-primary rounded-0 w-100">Proceed to checkout</a>
+                    }
+                </div>
+            </div>
+            <!-- Cart Totals End -->
+        </div>
+    </div>
+</div>
+<!-- Shop Cart Section End -->
+@section Scripts {
+    <script>
+        $(function () {
+            function loadHeaderCart() {
+                $("#miniCart").load("/AjaxContent/HeaderCart");
+                $("#numberCart").load("/AjaxContent/NumberCart");
+            }
+
+            $(".cartItemt").click(function () {
+                var productid = $(this).attr("data-mahh");
+                var soluong = parseInt($(this).val());
+                $.ajax({
+                    url: '/api/cart/update',
+                    datatype: "JSON",
+                    type: "POST",
+                    data: {
+                        productID: productid,
+                        amount: soluong
+                    },
+                    success: function (result) {
+                        if (result.success) {
+                            loadHeaderCart();
+                            window.location = 'cart.html';
+                        }
+                    },
+                    error: function (xhr) {
+                        alert('Có Lỗi Gì Rồi');
+                    }
+                });
+            });
+
+            $(".remove-btn").click(function () {
+                var productid = $(this).attr("data-mahh");
+                $.ajax({
+                    url: '/api/cart/remove',
+                    datatype: "JSON",
+                    type: "POST",
+                    data: {
+                        productID: productid
+                    },
+                    success: function (result) {
+                        if (result.success) {
+                            loadHeaderCart();
+                            window.location = 'cart.html';
+                        }
+                    },
+                    error: function (xhr) {
+                        alert('Có Lỗi Gì Rồi');
+                    }
+                });
+            });
+        });
+        
+    </script>
+}
